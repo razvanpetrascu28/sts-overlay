@@ -22,6 +22,15 @@ Check("Duplicates double next-draw probability without reading order", () => {
     try { StatsEngine.NextDraw(3, 2); throw new Exception("Accepted invalid counts"); }
     catch (ArgumentOutOfRangeException) { }
 });
+Check("Next hand includes every remaining card when all five are drawn", () => {
+    Equal(1.0, StatsEngine.NextHand(1, 5, 5));
+    Equal(1.0, StatsEngine.NextHand(2, 5, 5));
+    Equal(.5, StatsEngine.NextHand(1, 10, 5));
+    if (Math.Abs(StatsEngine.NextHand(2, 10, 5) - 7.0 / 9) > 1e-10) throw new Exception("Incorrect duplicate hand probability");
+    Equal(0.0, StatsEngine.NextHand(1, 10, 0));
+    Equal(0.0, StatsEngine.NextHand(0, 0, 5));
+    Equal(1.0, StatsEngine.NextHand(1, 3, 5));
+});
 Check("Actual damage and AoE are counted once per target", () => {
     var s = New(); s.Damage("a", "cleave", null, true, 6, 4, true);
     s.Damage("a", "cleave", null, true, 2, 0, true);

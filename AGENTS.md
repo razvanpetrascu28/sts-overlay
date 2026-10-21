@@ -2,6 +2,7 @@
 
 Build an English-only, informational Slay the Spire statistics mod.
 Observe resolved game events. Never change damage, cards, shuffles, saves or network messages.
+An explicitly requested progression import is a one-time exception: close the game, back up both profiles, preserve active runs and verify copied files. Never import or redirect saves during mod loading.
 Keep combat UI compact. Put detailed player and card statistics in an on-demand menu.
 Count actual HP loss, effective healing and damage absorbed by block separately from generated values.
 Do not claim multiplayer or in-game behavior is checked without running those checks.

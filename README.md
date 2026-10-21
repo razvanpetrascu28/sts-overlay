@@ -1,66 +1,55 @@
 # Spire Stats
 
-An English informational mod for **Slay the Spire 2** on Windows.
-Built against the locally installed game version **v0.107.1** (.NET 9 / Godot 4.5.1).
+An English informational mod for **Slay the Spire 2** on Windows. Built against game **v0.107.1**.
 
-## Features
+## Use it
 
-- A small movable damage panel with **Current Combat** and **Overall Run** views.
-- Each player's actual damage, damage per second and damage per turn.
-- A **Stats** button for detailed player statistics and a separate card list.
-- Block generated, damage absorbed by block, HP lost and self-inflicted HP loss.
-- Effective healing given, healing given to allies, and healing received.
-- Damage from attacks targeting all opponents, including damage across targets.
-- Per-card uses, draws, damage, AoE damage, generated/used block, healing, energy, stars and power stacks.
-- A combat/run comparison in the normal card inspection screen. Click a card in the deck or a pile to inspect it; normal card-playing controls are preserved.
-- **Next draw** labels on cards in the draw-pile view. Two copies among ten remaining cards display **20%**, rather than 10% per copy.
-- Local run statistics, including previous combats, saved separately from the game's saves.
+Click **Stats** beside the map button in the run's top bar. It opens a single statistics screen using the game's fonts, card art and power icons.
 
-Click **Stats** to open or close details. The **Player** and **Cards** buttons choose the view.
-The small **−** button collapses the player rows. Drag **Spire Stats** to move the meter.
+- **Overview** compares total damage, damage per round, damage blocked and ally healing.
+- **Offense** shows damage, AoE damage, damage per round and card plays.
+- **Defense** separates generated block, actual damage blocked, HP lost and self damage.
+- **Support** shows effective healing given, ally healing, healing received and power stacks.
+- **Cards** lists a player's uses, damage, block and healing. Click a card to inspect its combat/run results.
+
+Choose **This Combat** or **Entire Run** once at the top. **Back** or **Escape** closes the screen. There is no floating damage panel, collapse button or per-second rate.
+
+In the draw-pile view, **Next hand** is the probability of seeing at least one copy in the next hand-sized set of draws. Drawing five cards from five remaining cards displays **100%**. Two copies among ten cards with a five-card draw display **77.8%**. It uses the current hand-draw modifiers and assumes random draws; future restrictions or ordered cards can change the result. It never reads hidden order or consumes randomness.
 
 ## Install
 
-Close the game. Extract `STSOverlay.zip` into the game's `mods` folder:
+Close the game. Extract `STSOverlay.zip` into its `mods` folder:
 
 ```text
-Slay the Spire 2/
-  mods/
-    STSOverlay/
-      STSOverlay.dll
-      STSOverlay.json
+Slay the Spire 2/mods/STSOverlay/
+  STSOverlay.dll
+  STSOverlay.json
 ```
 
-Start the game and enable Spire Stats if its mod menu requests it.
-To uninstall, close the game and remove only `mods/STSOverlay`.
-This mod does not copy, modify, link or delete game saves.
-The game itself uses a separate modded profile when mods are enabled.
+Start through Steam and accept Load Mods if requested. To uninstall, close the game and remove only `mods/STSOverlay`.
+
+### Existing progression
+
+The game stores normal and modded profiles separately. Enabling a mod can therefore appear to reset progress even while the original files are still present. Importing existing unlocks/history is a separate one-time operation: close the game, back up both profiles and update both local and Steam Cloud storage. Copying local files alone is insufficient because the game's cloud sync can replace or delete them. This mod and its installer never import progression automatically, redirect saves, or create links between profiles. Future modded progress stays in the modded profile.
+
+## Statistics definitions
+
+- Damage is actual enemy HP removed, excluding blocked damage and overkill. AoE is included in that total.
+- Damage per round divides damage by combat rounds; the run view uses the sum of rounds across tracked fights.
+- Damage blocked is the game's actual absorbed damage on the player. Block generated is the actual increase after modifiers and caps.
+- Per-card block used credits the oldest remaining block first (FIFO). This is a convention because the game merges block into one pool. It is explained in a tooltip.
+- Healing counts HP restored, excluding overhealing. Ally healing excludes self-healing.
+- Card results group copies and upgrade versions. Plays include replays; energy and stars are charged once per paid replay series. Inactive zero-value effects stay out of the card details.
+- Shared effects without a unique owner remain unattributed. Single-source poison and resolved Doom execution HP are tracked; applying Doom stacks alone is not damage.
+- Run statistics are stored in this mod's own `spire-stats/` JSON files. Replaying a fight replaces its previous contribution. Fights before the mod was installed cannot be reconstructed.
 
 ## Multiplayer
 
-The mod observes each client's existing replicated combat events. It adds no network protocol or gameplay actions.
-Its manifest sets `affects_gameplay` to `false`. In the inspected v0.107.1 game code, these mods are excluded from the gameplay-mod compatibility list, so teammates should not need it merely to join. Each person who wants the interface needs a local installation.
-An actual two-client multiplayer session remains a required verification; see [TODO.md](TODO.md).
+The manifest sets `affects_gameplay` to `false`. The inspected game excludes these mods from its gameplay-mod compatibility list, so teammates should not need it simply to join. Each person who wants the interface installs it locally. No custom network messages or gameplay actions are added. A live two-client match still needs verification.
 
-## What the numbers mean
+## Build from source
 
-- **Damage** is actual enemy HP removed, excluding blocked damage and overkill.
-- **AoE damage** is the portion of that damage from attacks targeting all opponents. It is included in Damage, not added again.
-- **Block generated** is the actual increase in block, after modifiers and caps.
-- **Damage blocked** is the game's resolved blocked damage on that player.
-- **Block used (FIFO)** credits the oldest remaining block first to its source player and card. This is an attribution convention: the game merges block into one pool, so there is no uniquely correct per-card split. Expired or removed block earns no credit.
-- **Healing** is HP actually restored, excluding overhealing. **Healing given to allies** excludes self-healing. Unidentified healing is counted as received healing without inventing a healer.
-- **Uses** includes automatic plays and replays. Energy and stars are counted once for a paid replay series.
-- Card statistics group a player's copies and upgrade versions by card type. They are observed results, not predicted future effects or causal credit for every later effect of a power.
-- Shared effects without a unique known owner remain unattributed. The meter shows their damage separately rather than assigning it to a teammate. Poison with one known contributor is credited to that source; ambiguous shared poison is not divided arbitrarily.
-- Doom executions count the HP actually removed by the execution, using a known triggering card or unambiguous Doom contributor. Applying Doom stacks alone does not count as damage.
-- **DPS** uses elapsed combat time, including thinking time and animations, and excludes time outside combat and explicit pauses. Overall DPS divides all tracked damage by all tracked combat time. DPT uses combat rounds.
-- **Next draw** means one uniformly random draw from the remaining draw pile. It counts copies by card type, including upgrades. Known top-deck placement, ordered draws, or replacement effects can override that assumption. The mod never reads hidden order or advances RNG.
-- Statistics begin when the mod observes a fight. Older fights from before installation cannot be reconstructed. Replaying a fight replaces its earlier contribution to prevent double counting. Only this mod's own JSON files are written, under the game's user-data folder in `spire-stats/`.
-
-## Build and check
-
-Install .NET SDK 10. The mod references `sts2.dll`, `GodotSharp.dll`, and `0Harmony.dll` from your own game installation. No game assemblies are distributed or committed.
+Install .NET SDK 10 and keep the game installed locally. No game assemblies are distributed in the repository.
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1
@@ -69,11 +58,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-hooks.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install.ps1
 ```
 
-The build and installer discover Steam libraries. For a custom installation, pass `-GameDir "D:\path\to\Slay the Spire 2"`, or set `STS2_DIR`.
-The build produces `dist/STSOverlay.zip`. It does not install automatically.
+The scripts discover Steam libraries. Pass `-GameDir "D:\path\to\Slay the Spire 2"` or set `STS2_DIR` for a custom install. The build produces `dist/STSOverlay.zip` and does not install it automatically.
 
-The calculation checks cover duplicates, multi-target damage, actual versus generated block, expired block, effective healing, self damage, run aggregation, replay replacement, persistence and unknown sources. Hook checks apply the real Harmony patches to the installed game assembly in an isolated .NET 9 process. They do not launch the game or prove UI/multiplayer behavior. In-game and multiplayer verification are tracked separately.
-
-## Project hub
-
-Registered in the owner's local Backstage hub. `backstage.json` contains commands and checked progress; `TODO.md` records remaining work.
+See `docs/TESTING.md` for verification, `TODO.md` for remaining checks and `docs/IDEAS.md` for optional suggestions. Project commands and progress are registered in the owner's local Backstage hub.

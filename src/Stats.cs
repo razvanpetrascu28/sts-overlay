@@ -217,6 +217,18 @@ public sealed class StatsEngine
         return remaining == 0 ? 0 : (double)copies / remaining;
     }
 
+    public static double NextHand(int copies, int remaining, int draws)
+    {
+        if (remaining < 0 || copies < 0 || copies > remaining || draws < 0)
+            throw new ArgumentOutOfRangeException(nameof(copies));
+        if (copies == 0 || draws == 0) return 0;
+        if (draws >= remaining) return 1;
+        double miss = 1;
+        for (int i = 0; i < draws; i++)
+            miss *= (double)Math.Max(0, remaining - copies - i) / (remaining - i);
+        return 1 - miss;
+    }
+
     public string ToJson() => JsonSerializer.Serialize(Run);
     public void FromJson(string json) => Load(JsonSerializer.Deserialize<RunStats>(json)
         ?? throw new InvalidDataException("Empty statistics file."));

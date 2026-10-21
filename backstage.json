@@ -17,6 +17,8 @@
       { "title": "Check combat and card statistic calculations", "done": true },
       { "title": "Build the game mod and installation package", "done": true },
       { "title": "Check rendered menus and card labels", "done": true },
+      { "title": "Refine native tabs and next-hand probability", "done": true },
+      { "title": "Restore and verify existing progression", "done": true },
       { "title": "Check statistics in multiplayer", "done": false },
       { "title": "Upload the source repository to GitHub", "done": true }
     ]
