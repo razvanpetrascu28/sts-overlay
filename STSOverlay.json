@@ -1,0 +1,11 @@
+{
+  "id": "STSOverlay",
+  "name": "Spire Stats",
+  "author": "Razvan Petrascu",
+  "description": "Informational combat, run and card statistics with draw probabilities.",
+  "version": "0.1.0",
+  "has_dll": true,
+  "has_pck": false,
+  "affects_gameplay": false,
+  "min_game_version": "0.107.1"
+}

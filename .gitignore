@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+.vs/
+.idea/
+.godot/
+.local/
+dist/
+*.user
+*.log
+*.dll
+*.pdb
+*.pck
+*.zip
+local.settings.json

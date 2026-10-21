@@ -1,0 +1,24 @@
+{
+  "title": "Spire Stats",
+  "blurb": "Combat statistics and draw probabilities for Slay the Spire 2.",
+  "todo": "TODO.md",
+  "commands": [
+    { "id": "test", "label": "Check calculations", "run": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1", "kind": "once" },
+    { "id": "build", "label": "Build mod", "run": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1", "kind": "once" },
+    { "id": "hooks", "label": "Check game hooks", "run": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-hooks.ps1", "kind": "once" },
+    { "id": "install", "label": "Install mod", "run": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install.ps1", "kind": "once" }
+  ],
+  "progress": {
+    "goal": "Create an informational multiplayer mod with combat, run and card statistics.",
+    "focus": "Upload the checked preview build; a live multiplayer check remains.",
+    "blockers": ["A live multiplayer session has not been checked."],
+    "checkpoints": [
+      { "title": "Register the project in Backstage", "done": true },
+      { "title": "Check combat and card statistic calculations", "done": true },
+      { "title": "Build the game mod and installation package", "done": true },
+      { "title": "Check rendered menus and card labels", "done": true },
+      { "title": "Check statistics in multiplayer", "done": false },
+      { "title": "Upload the source repository to GitHub", "done": false }
+    ]
+  }
+}

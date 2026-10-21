@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>STSOverlay</AssemblyName>
+    <RootNamespace>StsOverlay</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(STS2_DIR)</Sts2Dir>
+    <GameData>$(Sts2Dir)/data_sts2_windows_x86_64</GameData>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src/**/*.cs" />
+    <Reference Include="sts2"><HintPath>$(GameData)/sts2.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="GodotSharp"><HintPath>$(GameData)/GodotSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameData)/0Harmony.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(UiSmoke)' == 'true'"><DefineConstants>$(DefineConstants);UI_SMOKE</DefineConstants></PropertyGroup>
+  <ItemGroup Condition="'$(UiSmoke)' == 'true'"><Compile Include="tests/ui/UiSmoke.cs" /></ItemGroup>
+  <Target Name="CheckGame" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(GameData)/sts2.dll')" Text="Set STS2_DIR or pass -p:Sts2Dir to your Slay the Spire 2 folder. See README.md." />
+  </Target>
+</Project>
