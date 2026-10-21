@@ -10,15 +10,15 @@
   ],
   "progress": {
     "goal": "Create an informational multiplayer mod with combat, run and card statistics.",
-    "focus": "Upload the checked preview build; a live multiplayer check remains.",
-    "blockers": ["A live multiplayer session has not been checked."],
+    "focus": "Playtest a full combat and a live multiplayer session.",
+    "blockers": ["A full combat and a live multiplayer session have not been checked."],
     "checkpoints": [
       { "title": "Register the project in Backstage", "done": true },
       { "title": "Check combat and card statistic calculations", "done": true },
       { "title": "Build the game mod and installation package", "done": true },
       { "title": "Check rendered menus and card labels", "done": true },
       { "title": "Check statistics in multiplayer", "done": false },
-      { "title": "Upload the source repository to GitHub", "done": false }
+      { "title": "Upload the source repository to GitHub", "done": true }
     ]
   }
 }

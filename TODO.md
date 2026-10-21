@@ -16,5 +16,5 @@
 ## Setup
 
 - [x] **Register in Backstage** — Link project instructions, register this folder, run its setup check and rebuild the Backstage snapshot. (2026-10-21)
-- [ ] **Upload the Git repository** — Create the repository using the owner's identity, exclude local/game files and push the checked source to GitHub. (2026-10-21)
+- [x] **Upload the Git repository** — Create the repository using the owner's identity, exclude local/game files and push the checked source to GitHub. (2026-10-21)
 - [ ] **Add a project icon** — Connect suitable existing app art and verify it on Backstage's project card and sidebar in both themes. (2026-10-21)
